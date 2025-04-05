@@ -73,3 +73,9 @@ C:\Users\user\Desktop\ErpConnector\obj\Debug\net9.0\ErpConnector.pdb
 C:\Users\user\Desktop\ErpConnector\obj\Debug\net9.0\ErpConnector.genruntimeconfig.cache
 C:\Users\user\Desktop\ErpConnector\obj\Debug\net9.0\ref\ErpConnector.dll
 C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\appsettings.json
+C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\Microsoft.Extensions.Diagnostics.dll
+C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\Microsoft.Extensions.Http.dll
+C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
+C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll

@@ -1,30 +1,43 @@
-﻿using ErpConnector.Data;
-using ErpConnector.Model;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Http;
+using System.Net.Http;using ErpConnector.Data;
+using ErpConnector.Models;
+using ErpConnector.Controllers;
+using ErpConnector.Services;
 
 namespace ErpConnector
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            // Load configuration
-            var config = new ConfigurationBuilder()
+            // Setup configuration
+            var configuration = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
-            var dbContext = new DataContextDapper(config);
-            Console.WriteLine("Dapper context initialized!");
+            // Setup DI
+            var services = new ServiceCollection();
 
-            // Fetch products
-            IEnumerable<Product> products = dbContext.GetProducts();
-            
-            // Display products
-            foreach (var product in products)
-            {
-                Console.WriteLine($"ID: {product.Id}, Name: {product.Name}, SKU: {product.Sku}, Price: {product.Price}");
-            }
+            services.AddSingleton<IConfiguration>(configuration);
+
+            // Register HttpClient
+            services.AddHttpClient<IProductService, ProductService>();
+
+            // Register Dapper DB context
+            services.AddTransient<DataContextDapper>();
+
+            // Register a service that will coordinate the flow (optional)
+            services.AddTransient<ProductController>();
+
+            // Build DI provider
+            var serviceProvider = services.BuildServiceProvider();
+
+            // Run the main logic
+            var controller = serviceProvider.GetRequiredService<ProductController>();
+            await controller.syncProducts();
         }
     }
 }
