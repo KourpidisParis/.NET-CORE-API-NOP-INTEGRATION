@@ -1,37 +1,20 @@
-using System.Text.Json;
 using ErpConnector.DTOs;
+using ErpConnector.Repository.IRepository;
 
 namespace ErpConnector.Services
 {
-    public class ProductService:IProductService
+    public class ProductService : IProductService
     {
-        private readonly HttpClient _httpClient;
-        public ProductService(HttpClient httpClient)
+        private readonly IProductRepository _productRepository;
+
+        public ProductService(IProductRepository productRepository)
         {
-            _httpClient = httpClient;
+            _productRepository = productRepository;
         }
-        public async Task<IEnumerable<ProductFromApiDto>> GetProducts()
+
+        public async Task<IEnumerable<ProductFromApiDto>> GetProductsFromApi()
         {
-            var response = await _httpClient.GetAsync("https://fakestoreapi.com/products");
-
-            if (!response.IsSuccessStatusCode)
-            {
-                throw new Exception("Fetch failed.");
-            }
-
-            var json = await response.Content.ReadAsStringAsync();
-
-            var products = JsonSerializer.Deserialize<List<ProductFromApiDto>>(json, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
-
-            if (products == null)
-            {
-                throw new Exception("Failed to deserialize products from ERP.");
-            }
-
-            return products;
+            return await _productRepository.GetProducts();
         }
     }
 }

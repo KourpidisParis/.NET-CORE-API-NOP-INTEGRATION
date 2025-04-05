@@ -4,6 +4,6 @@ namespace ErpConnector.Services
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductFromApiDto>>  GetProducts();
+        Task<IEnumerable<ProductFromApiDto>> GetProductsFromApi();
     }
 }

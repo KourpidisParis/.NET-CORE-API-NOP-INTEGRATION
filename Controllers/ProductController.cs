@@ -1,6 +1,5 @@
 using ErpConnector.Data;
 using ErpConnector.DTOs;
-using ErpConnector.Models;
 using ErpConnector.Services;
 
 namespace ErpConnector.Controllers
@@ -10,24 +9,22 @@ namespace ErpConnector.Controllers
         private readonly DataContextDapper _dbContext;
         private readonly IProductService _productService;
 
-        public ProductController(IProductService productService,DataContextDapper dbContext)
+        public ProductController(IProductService productService, DataContextDapper dbContext)
         {
             _productService = productService;
-            _dbContext      = dbContext;
+            _dbContext = dbContext;
         }
 
-        public async Task syncProducts()
+        public async Task SyncProducts()
         {
             Console.WriteLine("Dapper context initialized!");
 
-            IEnumerable<ProductFromApiDto> products = await _productService.GetProducts();
+            IEnumerable<ProductFromApiDto> products = await _productService.GetProductsFromApi();
 
-             foreach (var product in products)
-             {
-                 Console.WriteLine($"ID: {product.Id}, Name: {product.Title},Description: {product.Description}");
-             }
-
-            await Task.CompletedTask;
+            foreach (var product in products)
+            {
+                Console.WriteLine($"ID: {product.Id}, Name: {product.Title}, Description: {product.Description}");
+            }
         }
     }
 }

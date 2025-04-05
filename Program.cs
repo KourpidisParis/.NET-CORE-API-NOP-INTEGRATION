@@ -1,10 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Http;
-using System.Net.Http;using ErpConnector.Data;
+using System.Net.Http;
+using ErpConnector.Data;
 using ErpConnector.Models;
 using ErpConnector.Controllers;
 using ErpConnector.Services;
+using ErpConnector.Repository.IRepository;
+using ErpConnector.Repository;
 
 namespace ErpConnector
 {
@@ -23,13 +26,12 @@ namespace ErpConnector
 
             services.AddSingleton<IConfiguration>(configuration);
 
-            // Register HttpClient
-            services.AddHttpClient<IProductService, ProductService>();
+            services.AddHttpClient<IProductRepository, ProductRepository>(); 
 
-            // Register Dapper DB context
+            services.AddTransient<IProductService, ProductService>();
+
             services.AddTransient<DataContextDapper>();
 
-            // Register a service that will coordinate the flow (optional)
             services.AddTransient<ProductController>();
 
             // Build DI provider
@@ -37,7 +39,7 @@ namespace ErpConnector
 
             // Run the main logic
             var controller = serviceProvider.GetRequiredService<ProductController>();
-            await controller.syncProducts();
+            await controller.SyncProducts();
         }
     }
 }

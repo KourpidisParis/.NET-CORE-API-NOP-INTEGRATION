@@ -1,7 +1,9 @@
+using ErpConnector.DTOs;
+
 namespace ErpConnector.Repository.IRepository
 {
-    class IProductRepository
+    public interface IProductRepository
     {
-        //
+        Task<IEnumerable<ProductFromApiDto>>  GetProducts();
     }
 }
