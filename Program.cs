@@ -1,13 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Http;
-using System.Net.Http;
 using ErpConnector.Data;
-using ErpConnector.Models;
 using ErpConnector.Controllers;
 using ErpConnector.Services;
-using ErpConnector.Repository.IRepository;
 using ErpConnector.Repository;
+using ErpConnector.Repository.IRepository;
+using ErpConnector.Services.IServices;
 
 namespace ErpConnector
 {
@@ -24,20 +22,29 @@ namespace ErpConnector
             // Setup DI
             var services = new ServiceCollection();
 
+            //Database
             services.AddSingleton<IConfiguration>(configuration);
-
-            services.AddHttpClient<IProductRepository, ProductRepository>(); 
-
-            services.AddTransient<IProductService, ProductService>();
-
             services.AddTransient<DataContextDapper>();
+            services.AddTransient<IDbInitializer, DbInitializer>();
 
+            //Api
+            services.AddHttpClient<IApiRepository, ApiRepository>(); 
+            services.AddTransient<IApiService, ApiService>();
+
+            //Nop
+            services.AddTransient<INopRepository, NopRepository>(); 
+            services.AddTransient<INopService, NopService>();
+
+            //Controllers
             services.AddTransient<ProductController>();
 
-            // Build DI provider
             var serviceProvider = services.BuildServiceProvider();
 
-            // Run the main logic
+            //Initialize data
+            var dbInitializer = serviceProvider.GetRequiredService<IDbInitializer>();
+            await dbInitializer.InitializeProductTableAsync();
+
+            //Run the main logic
             var controller = serviceProvider.GetRequiredService<ProductController>();
             await controller.SyncProducts();
         }

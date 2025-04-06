@@ -4,10 +4,10 @@ using ErpConnector.Repository.IRepository;
 
 namespace ErpConnector.Repository
 {
-    public class ProductRepository:IProductRepository
+    public class ApiRepository : IApiRepository
     {
         private readonly HttpClient _httpClient;
-        public ProductRepository(HttpClient httpClient)
+        public ApiRepository(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

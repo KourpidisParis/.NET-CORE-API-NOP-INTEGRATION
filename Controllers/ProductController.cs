@@ -1,30 +1,22 @@
-using ErpConnector.Data;
-using ErpConnector.DTOs;
-using ErpConnector.Services;
+using ErpConnector.Services.IServices;
 
 namespace ErpConnector.Controllers
 {
     public class ProductController
     {
-        private readonly DataContextDapper _dbContext;
-        private readonly IProductService _productService;
+        private readonly IApiService _apiService;
+        private readonly INopService _nopService;
 
-        public ProductController(IProductService productService, DataContextDapper dbContext)
+        public ProductController(IApiService apiService, INopService syncService)
         {
-            _productService = productService;
-            _dbContext = dbContext;
+            _apiService = apiService;
+            _nopService = syncService;
         }
 
         public async Task SyncProducts()
         {
-            Console.WriteLine("Dapper context initialized!");
-
-            IEnumerable<ProductFromApiDto> products = await _productService.GetProductsFromApi();
-
-            foreach (var product in products)
-            {
-                Console.WriteLine($"ID: {product.Id}, Name: {product.Title}, Description: {product.Description}");
-            }
+            var products = await _apiService.GetProducts();
+            await _nopService.SyncProducts(products);
         }
     }
 }
