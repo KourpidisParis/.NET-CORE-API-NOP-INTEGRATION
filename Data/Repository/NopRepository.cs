@@ -1,6 +1,6 @@
-using ErpConnector.DTOs;
 using ErpConnector.Data;
 using ErpConnector.Repository.IRepository;
+using ErpConnector.Models;
 
 namespace ErpConnector.Repository
 {
@@ -21,24 +21,25 @@ namespace ErpConnector.Repository
             return await Task.FromResult(id);        
         }
 
-        public async Task InsertProduct(ProductFromApiDto product)
+        public async Task InsertProduct(Product product)
         {
             string sql = @"
-                INSERT INTO [nop].[dbo].[Product] (Name, ShortDescription, Price, Published, CreatedOnUtc, ApiId)
-                VALUES (@Name, @Description, @Price, 1, GETUTCDATE(), @ApiId);";
+                INSERT INTO [nop].[dbo].[Product] (Name, ShortDescription, Price,ProductTypeId ,Published, CreatedOnUtc, ApiId)
+                VALUES (@Name, @Description, @Price, 1,@ProductTypeId ,GETUTCDATE(), @ApiId);";
 
             _dapper.Execute(sql, new
             {
-                Name = product.Title,
-                Description = product.Description,
+                Name = product.Name,
+                Description = product.FullDescription,
                 Price = product.Price,
-                ApiId = product.Id
+                ApiId = product.ApiId,
+                ProductTypeId = product.ProductTypeId
             });
 
             await Task.CompletedTask;
         }
 
-        public async Task UpdateProduct(ProductFromApiDto product, int id)
+        public async Task UpdateProduct(Product product, int id)
         {
             string sql = @"
                 UPDATE [nop].[dbo].[Product]
@@ -49,8 +50,8 @@ namespace ErpConnector.Repository
 
             _dapper.Execute(sql, new
             {
-                Name = product.Title,
-                Description = product.Description,
+                Name = product.Name,
+                Description = product.FullDescription,
                 Price = product.Price,
                 Id = id
             });

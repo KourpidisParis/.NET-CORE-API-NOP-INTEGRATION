@@ -6,6 +6,7 @@ using ErpConnector.Services;
 using ErpConnector.Repository;
 using ErpConnector.Repository.IRepository;
 using ErpConnector.Services.IServices;
+using ErpConnector.Mapping;
 
 namespace ErpConnector
 {
@@ -35,9 +36,13 @@ namespace ErpConnector
             services.AddTransient<INopRepository, NopRepository>(); 
             services.AddTransient<INopService, NopService>();
 
+            //Mapping
+            services.AddAutoMapper(typeof(MappingProfile));
+
             //Controllers
             services.AddTransient<ProductController>();
 
+            //Service Provider
             var serviceProvider = services.BuildServiceProvider();
 
             //Initialize data

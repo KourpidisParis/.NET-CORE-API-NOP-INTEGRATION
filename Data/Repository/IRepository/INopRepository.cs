@@ -1,11 +1,11 @@
-using ErpConnector.DTOs;
+using ErpConnector.Models;
 
 namespace ErpConnector.Repository.IRepository
 {
     public interface INopRepository
     {
         Task<int?> GetProductIdByExternalId(string externalId);
-        Task InsertProduct(ProductFromApiDto product);
-        Task UpdateProduct(ProductFromApiDto product, int id);
+        Task InsertProduct(Product product);
+        Task UpdateProduct(Product product, int id);
     }
 }

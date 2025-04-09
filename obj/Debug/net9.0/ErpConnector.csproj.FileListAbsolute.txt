@@ -79,3 +79,5 @@ C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\Microsoft.Extensions.Diagnos
 C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\Microsoft.Extensions.Http.dll
 C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
 C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\AutoMapper.dll
+C:\Users\user\Desktop\ErpConnector\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
