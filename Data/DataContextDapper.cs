@@ -14,10 +14,11 @@ namespace ErpConnector.Data
         public DataContextDapper(IConfiguration config)
         {
             _config = config;
-            _connectionString = _config.GetConnectionString("DefaultConnection");
+            _connectionString = _config.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
         }
 
-        public T LoadDataSingle<T>(string sql, object? parameters = null)
+        public T? LoadDataSingle<T>(string sql, object? parameters = null)
         {
             using IDbConnection dbConnection = new SqlConnection(_connectionString);
             return dbConnection.QueryFirstOrDefault<T>(sql, parameters);
