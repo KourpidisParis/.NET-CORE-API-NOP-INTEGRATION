@@ -24,20 +24,69 @@ namespace ErpConnector.Repository
         public async Task InsertProduct(Product product)
         {
             string sql = @"
-                INSERT INTO [nop].[dbo].[Product] (Name, ShortDescription, Price,ProductTypeId ,Published, CreatedOnUtc, ApiId)
-                VALUES (@Name, @Description, @Price, 1,@ProductTypeId ,GETUTCDATE(), @ApiId);";
+                INSERT INTO [nop].[dbo].[Product] (
+                    Name, MetaKeywords, MetaTitle, Sku, ManufacturerPartNumber, Gtin,
+                    RequiredProductIds, AllowedQuantities, ProductTypeId, ParentGroupedProductId,
+                    VisibleIndividually, ShortDescription, FullDescription, AdminComment,
+                    ProductTemplateId, VendorId, ShowOnHomepage, MetaDescription, AllowCustomerReviews,
+                    ApprovedRatingSum, NotApprovedRatingSum, ApprovedTotalReviews, NotApprovedTotalReviews,
+                    SubjectToAcl, LimitedToStores, IsGiftCard, GiftCardTypeId, OverriddenGiftCardAmount,
+                    RequireOtherProducts, AutomaticallyAddRequiredProducts, IsDownload, DownloadId,
+                    UnlimitedDownloads, MaxNumberOfDownloads, DownloadExpirationDays, DownloadActivationTypeId,
+                    HasSampleDownload, SampleDownloadId, HasUserAgreement, UserAgreementText,
+                    IsRecurring, RecurringCycleLength, RecurringCyclePeriodId, RecurringTotalCycles,
+                    IsRental, RentalPriceLength, RentalPricePeriodId, IsShipEnabled,
+                    IsFreeShipping, ShipSeparately, AdditionalShippingCharge, DeliveryDateId,
+                    IsTaxExempt, TaxCategoryId, ManageInventoryMethodId, ProductAvailabilityRangeId,
+                    UseMultipleWarehouses, WarehouseId, StockQuantity, DisplayStockAvailability,
+                    DisplayStockQuantity, MinStockQuantity, LowStockActivityId, NotifyAdminForQuantityBelow,
+                    BackorderModeId, AllowBackInStockSubscriptions, OrderMinimumQuantity, OrderMaximumQuantity,
+                    AllowAddingOnlyExistingAttributeCombinations, DisplayAttributeCombinationImagesOnly,
+                    NotReturnable, DisableBuyButton, DisableWishlistButton, AvailableForPreOrder,
+                    PreOrderAvailabilityStartDateTimeUtc, CallForPrice, Price, OldPrice, ProductCost,
+                    CustomerEntersPrice, MinimumCustomerEnteredPrice, MaximumCustomerEnteredPrice,
+                    BasepriceEnabled, BasepriceAmount, BasepriceUnitId, BasepriceBaseAmount, BasepriceBaseUnitId,
+                    MarkAsNew, MarkAsNewStartDateTimeUtc, MarkAsNewEndDateTimeUtc,
+                    Weight, Length, Width, Height,
+                    AvailableStartDateTimeUtc, AvailableEndDateTimeUtc,
+                    DisplayOrder, Published, Deleted,
+                    CreatedOnUtc, UpdatedOnUtc, ApiId
+                )
+                VALUES (
+                    @Name, @MetaKeywords, @MetaTitle, @Sku, @ManufacturerPartNumber, @Gtin,
+                    @RequiredProductIds, @AllowedQuantities, @ProductTypeId, @ParentGroupedProductId,
+                    @VisibleIndividually, @ShortDescription, @FullDescription, @AdminComment,
+                    @ProductTemplateId, @VendorId, @ShowOnHomepage, @MetaDescription, @AllowCustomerReviews,
+                    @ApprovedRatingSum, @NotApprovedRatingSum, @ApprovedTotalReviews, @NotApprovedTotalReviews,
+                    @SubjectToAcl, @LimitedToStores, @IsGiftCard, @GiftCardTypeId, @OverriddenGiftCardAmount,
+                    @RequireOtherProducts, @AutomaticallyAddRequiredProducts, @IsDownload, @DownloadId,
+                    @UnlimitedDownloads, @MaxNumberOfDownloads, @DownloadExpirationDays, @DownloadActivationTypeId,
+                    @HasSampleDownload, @SampleDownloadId, @HasUserAgreement, @UserAgreementText,
+                    @IsRecurring, @RecurringCycleLength, @RecurringCyclePeriodId, @RecurringTotalCycles,
+                    @IsRental, @RentalPriceLength, @RentalPricePeriodId, @IsShipEnabled,
+                    @IsFreeShipping, @ShipSeparately, @AdditionalShippingCharge, @DeliveryDateId,
+                    @IsTaxExempt, @TaxCategoryId, @ManageInventoryMethodId, @ProductAvailabilityRangeId,
+                    @UseMultipleWarehouses, @WarehouseId, @StockQuantity, @DisplayStockAvailability,
+                    @DisplayStockQuantity, @MinStockQuantity, @LowStockActivityId, @NotifyAdminForQuantityBelow,
+                    @BackorderModeId, @AllowBackInStockSubscriptions, @OrderMinimumQuantity, @OrderMaximumQuantity,
+                    @AllowAddingOnlyExistingAttributeCombinations, @DisplayAttributeCombinationImagesOnly,
+                    @NotReturnable, @DisableBuyButton, @DisableWishlistButton, @AvailableForPreOrder,
+                    @PreOrderAvailabilityStartDateTimeUtc, @CallForPrice, @Price, @OldPrice, @ProductCost,
+                    @CustomerEntersPrice, @MinimumCustomerEnteredPrice, @MaximumCustomerEnteredPrice,
+                    @BasepriceEnabled, @BasepriceAmount, @BasepriceUnitId, @BasepriceBaseAmount, @BasepriceBaseUnitId,
+                    @MarkAsNew, @MarkAsNewStartDateTimeUtc, @MarkAsNewEndDateTimeUtc,
+                    @Weight, @Length, @Width, @Height,
+                    @AvailableStartDateTimeUtc, @AvailableEndDateTimeUtc,
+                    @DisplayOrder, @Published, @Deleted,
+                    @CreatedOnUtc, @UpdatedOnUtc, @ApiId
+                );
+            ";
 
-            _dapper.Execute(sql, new
-            {
-                Name = product.Name,
-                Description = product.FullDescription,
-                Price = product.Price,
-                ApiId = product.ApiId,
-                ProductTypeId = product.ProductTypeId
-            });
+            _dapper.Execute(sql, product);
 
             await Task.CompletedTask;
         }
+
 
         public async Task UpdateProduct(Product product, int id)
         {
