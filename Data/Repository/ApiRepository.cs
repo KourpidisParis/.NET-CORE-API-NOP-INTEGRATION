@@ -38,9 +38,10 @@ namespace ErpConnector.Repository
             return productsResponse.Products;
         }
 
-        public async Task<IEnumerable<CategroryFromApiDto>> GetCategories()
+        public async Task<IEnumerable<CategoryFromApiDto>> GetCategories()
         {
             var categoriesUrl = _url + "products/categories";
+            
             var response = await _httpClient.GetAsync(categoriesUrl);
 
             if (!response.IsSuccessStatusCode)
@@ -50,17 +51,17 @@ namespace ErpConnector.Repository
 
             var json = await response.Content.ReadAsStringAsync();
 
-            var products = JsonSerializer.Deserialize<List<CategroryFromApiDto>>(json, new JsonSerializerOptions
+            var categories = JsonSerializer.Deserialize<List<CategoryFromApiDto>>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
 
-            if (products == null)
+            if (categories == null)
             {
                 throw new Exception("Failed to deserialize products from ERP.");
             }
 
-            return products;
+            return categories;
         }
     }
 }

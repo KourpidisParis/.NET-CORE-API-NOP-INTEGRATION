@@ -41,17 +41,40 @@ namespace ErpConnector
 
             //Controllers
             services.AddTransient<ProductController>();
+            services.AddTransient<CategoryController>();
 
-            //Service Provider
+            // Build service provider
             var serviceProvider = services.BuildServiceProvider();
 
-            //Initialize data
+            // Initialize database
             var dbInitializer = serviceProvider.GetRequiredService<IDbInitializer>();
             await dbInitializer.InitializeProductTableAsync();
 
-            //Run the main logic
-            var controller = serviceProvider.GetRequiredService<ProductController>();
-            await controller.SyncProducts();
+            // Check args
+            if (args.Length == 0)
+            {
+                Console.WriteLine("Please provide a command: 'products' or 'categories'");
+                return;
+            }
+
+            string command = args[0].ToLower();
+
+            switch (command)
+            {
+                case "products":
+                    var productController = serviceProvider.GetRequiredService<ProductController>();
+                    await productController.SyncProducts();
+                    break;
+
+                case "categories":
+                    var categoryController = serviceProvider.GetRequiredService<CategoryController>();
+                    await categoryController.SyncCategories();
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid command. Use 'products' or 'categories'.");
+                    break;
+            }
         }
     }
 }

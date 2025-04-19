@@ -16,5 +16,9 @@ namespace ErpConnector.Services
         {
             return await _apiRepository.GetProducts();
         }
+        public async Task<IEnumerable<CategoryFromApiDto>> GetCategories()
+        {
+            return await _apiRepository.GetCategories();
+        }
     }
 }

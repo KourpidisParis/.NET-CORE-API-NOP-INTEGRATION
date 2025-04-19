@@ -1,14 +1,20 @@
 namespace ErpConnector.DTOs
 {
-    public class CategroryFromApiDto
+    public class CategoryFromApiDto
     {
-        public string Title;
+        public string Name {get;set;}
+        public string Slug {get;set;}
 
-        public CategroryFromApiDto()
+        public CategoryFromApiDto()
         {
-            if(Title == null)
+            if(Name == null)
             {
-                Title = "";
+                Name = "";
+            }
+
+            if(Slug == null)
+            {
+                Slug = "";
             }
         }
     }
