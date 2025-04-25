@@ -4,10 +4,10 @@ using ErpConnector.Models;
 
 namespace ErpConnector.Repository
 {
-    public class NopRepository : INopRepository
+    public class NopProductRepository : INopProductRepository
     {
         private readonly DataContextDapper _dapper;
-        public NopRepository(DataContextDapper dapper)
+        public NopProductRepository(DataContextDapper dapper)
         {
             _dapper = dapper;
         }

@@ -7,6 +7,8 @@ using ErpConnector.Repository;
 using ErpConnector.Repository.IRepository;
 using ErpConnector.Services.IServices;
 using ErpConnector.Mapping;
+using ErpConnector.Processors.IProcessor;
+using ErpConnector.Processors;
 
 namespace ErpConnector
 {
@@ -25,16 +27,17 @@ namespace ErpConnector
 
             //Database
             services.AddSingleton<IConfiguration>(configuration);
-            services.AddTransient<DataContextDapper>();
-            services.AddTransient<IDbInitializer, DbInitializer>();
+            services.AddScoped<DataContextDapper>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             //Api
             services.AddHttpClient<IApiRepository, ApiRepository>(); 
             services.AddTransient<IApiService, ApiService>();
 
             //Nop
-            services.AddTransient<INopRepository, NopRepository>(); 
-            services.AddTransient<INopService, NopService>();
+            services.AddTransient<INopProductRepository, NopProductRepository>(); 
+            services.AddTransient<INopProductService, NopProductService>();
+            services.AddTransient<IProductProcessor, ProductProcessor>();
 
             //Mapping
             services.AddAutoMapper(typeof(MappingProfile));
@@ -49,6 +52,7 @@ namespace ErpConnector
             // Initialize database
             var dbInitializer = serviceProvider.GetRequiredService<IDbInitializer>();
             await dbInitializer.InitializeProductTableAsync();
+            await dbInitializer.InitializeCategoryTableAsync();
 
             // Check args
             if (args.Length == 0)

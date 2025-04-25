@@ -5,9 +5,9 @@ namespace ErpConnector.Controllers
     public class ProductController
     {
         private readonly IApiService _apiService;
-        private readonly INopService _nopService;
+        private readonly INopProductService _nopService;
 
-        public ProductController(IApiService apiService, INopService syncService)
+        public ProductController(IApiService apiService, INopProductService syncService)
         {
             _apiService = apiService;
             _nopService = syncService;

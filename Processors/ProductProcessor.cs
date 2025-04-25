@@ -1,10 +1,11 @@
 using ErpConnector.Models;
+using ErpConnector.Processors.IProcessor;
 
-namespace ErpConnector.Helpers
+namespace ErpConnector.Processors
 {
-    public static class ProductDefaultsHelper
+    public class ProductProcessor : IProductProcessor
     {
-        public static Product ApplyDefaultProductValues(Product product)
+        public Product ApplyDefaultProductValues(Product product)
         {
             // product.Name ??= string.Empty;
             product.MetaKeywords ??= string.Empty;

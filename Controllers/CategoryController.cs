@@ -4,20 +4,19 @@ namespace ErpConnector.Controllers
 {
     public class CategoryController
     {
-        
         private readonly IApiService _apiService;
-        public CategoryController(IApiService apiService)
+        private readonly INopCategoryService _nopCategoryService;
+
+        public CategoryController(IApiService apiService, INopCategoryService nopCategoryService)
         {
             _apiService = apiService;
+            _nopCategoryService = nopCategoryService;
         }
+
         public async Task SyncCategories()
         {
             var categories = await _apiService.GetCategories();
-
-            foreach (var category in categories)
-            {
-                Console.WriteLine($"Category: {category.Name}, Slug: {category.Slug}");
-            }
+            await _nopCategoryService.SyncCategories(categories);
         }
     }
 }

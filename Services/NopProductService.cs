@@ -1,20 +1,22 @@
 using AutoMapper;
 using ErpConnector.DTOs;
-using ErpConnector.Helpers;
 using ErpConnector.Models;
+using ErpConnector.Processors.IProcessor;
 using ErpConnector.Repository.IRepository;
 using ErpConnector.Services.IServices;
 
 namespace ErpConnector.Services
 {
-    public class NopService : INopService
+    public class NopProductService : INopProductService
     {
-        private readonly INopRepository _nopRepository;
+        private readonly INopProductRepository _nopRepository;
         private readonly IMapper _mapper;
-        public NopService(INopRepository nopRepository,IMapper mapper)
+        private readonly IProductProcessor _productProcessor;
+        public NopProductService(INopProductRepository nopRepository,IMapper mapper,IProductProcessor productProcessor)
         {
             _nopRepository = nopRepository;
             _mapper = mapper;
+            _productProcessor = productProcessor;
         }
 
         public async Task SyncProducts(IEnumerable<ProductFromApiDto> products)
@@ -22,7 +24,7 @@ namespace ErpConnector.Services
             foreach (var productDto in products)
             {
                 // var productModel = _mapper.Map<Product>(productDto);
-                var productModel = ProductDefaultsHelper.ApplyDefaultProductValues(_mapper.Map<Product>(productDto));
+                var productModel = _productProcessor.ApplyDefaultProductValues(_mapper.Map<Product>(productDto));
 
                 if (productModel.ApiId == null)
                 {

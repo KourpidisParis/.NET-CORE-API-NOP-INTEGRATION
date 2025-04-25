@@ -2,7 +2,7 @@ using ErpConnector.Models;
 
 namespace ErpConnector.Repository.IRepository
 {
-    public interface INopRepository
+    public interface INopProductRepository
     {
         Task<int?> GetProductIdByExternalId(string apiId);
         Task InsertProduct(Product product);
