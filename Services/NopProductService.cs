@@ -45,13 +45,40 @@ namespace ErpConnector.Services
                     Console.WriteLine($"Inserted: {productModel.Name}");
                 }
 
-                //After inser/update product
-                var categoryId = await _nopRepository.GetCategoryIdByApiId(productModel.Category);
-                if (categoryId.HasValue)
-                {
-                    await _nopRepository.InsertProductCategoryMapping(productId.Value, categoryId.Value);
-                }
+                //Category
+                await MapProductToCategory(productModel, productId);
             }
         }
+
+        public async Task MapProductToCategory(Product productModel, int? productId)
+        {
+            if (productId <= 0 || productModel == null)
+            {
+                Console.WriteLine("Invalid product or product ID. Cannot map category.");
+                return;
+            }
+
+            var categoryId = await _nopRepository.GetCategoryIdByApiId(productModel.Category);
+
+            if (!categoryId.HasValue)
+            {
+                Console.WriteLine($"Category not found for {productModel.Category}");
+                return;
+            }
+
+            bool mappingExists =  _nopRepository.GetProductCategoryMapping(productId.Value, categoryId.Value);
+            
+            if (mappingExists)
+            {
+                Console.WriteLine($"Mapping already exists for ProductId: {productId}, CategoryId: {categoryId}");
+            }
+            else
+            {
+                await _nopRepository.InsertProductCategoryMapping(productId.Value, categoryId.Value);
+                Console.WriteLine($"Mapped ProductId {productId} to CategoryId {categoryId.Value}");
+            }
+        }
+
+
     }
 }

@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using ErpConnector.Models;
 using ErpConnector.Processors.IProcessor;
 
@@ -82,6 +83,19 @@ namespace ErpConnector.Processors
             product.UpdatedOnUtc = DateTime.UtcNow;
 
             return product;
+        }
+
+        private bool GetPublished(string availabilityStatus)
+        {
+            if(!string.IsNullOrEmpty(availabilityStatus))
+            {
+                if(availabilityStatus == "In Stock")
+                {
+                    return true;
+                }
+            }
+            
+            return false;
         }
     }
 }

@@ -15,8 +15,7 @@ namespace ErpConnector.Mapping
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Title))
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category))
                 .ForMember(dest => dest.FullDescription, opt => opt.MapFrom(src => src.Description));
-
-
+                
             CreateMap<CategoryFromApiDto, Category>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.ApiId, opt => opt.MapFrom(src => src.Slug));

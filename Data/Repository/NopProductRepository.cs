@@ -80,6 +80,7 @@ namespace ErpConnector.Repository
                     @DisplayOrder, @Published, @Deleted,
                     @CreatedOnUtc, @UpdatedOnUtc, @ApiId
                 );
+                SELECT CAST(SCOPE_IDENTITY() AS INT)
             ";
 
             var newId = _dapper.LoadDataSingle<int>(sql, product);
@@ -108,7 +109,7 @@ namespace ErpConnector.Repository
             await Task.CompletedTask;
         }
 
-        public async Task<int?> GetCategoryIdByApiId(string apiId)
+        public async Task<int?> GetCategoryIdByApiId(string? apiId)
         {
             var categoryId = _dapper.LoadDataSingle<int?>(
                 "SELECT TOP 1 Id FROM [nop].[dbo].[Category] WHERE ApiId = @ApiId",
@@ -130,6 +131,17 @@ namespace ErpConnector.Repository
             _dapper.Execute(sql, new { ProductId = productId, CategoryId = categoryId });
 
             await Task.CompletedTask;
+        }
+
+        public bool GetProductCategoryMapping(int productId, int categoryId)
+        {
+            string sql = @"SELECT COUNT(1) 
+                          FROM [nop].[dbo].[Product_Category_Mapping] 
+                          WHERE ProductId = @ProductId AND CategoryId = @CategoryId";
+            
+            var result = _dapper.LoadDataSingle<int>(sql, new { ProductId = productId, CategoryId = categoryId });
+
+            return result > 0;
         }
     }
 }
