@@ -34,10 +34,15 @@ namespace ErpConnector
             services.AddHttpClient<IApiRepository, ApiRepository>(); 
             services.AddTransient<IApiService, ApiService>();
 
-            //Nop
+            //Nop - Product
             services.AddTransient<INopProductRepository, NopProductRepository>(); 
             services.AddTransient<INopProductService, NopProductService>();
             services.AddTransient<IProductProcessor, ProductProcessor>();
+
+            //Nop - Category
+            services.AddTransient<INopCategoryRepository, NopCategoryRepository>(); 
+            services.AddTransient<INopCategoryService, NopCategoryService>();
+            services.AddTransient<ICategoryProcessor, CategoryProcessor>();
 
             //Mapping
             services.AddAutoMapper(typeof(MappingProfile));
@@ -54,7 +59,7 @@ namespace ErpConnector
             await dbInitializer.InitializeProductTableAsync();
             await dbInitializer.InitializeCategoryTableAsync();
 
-            // Check args
+            // Check input
             if (args.Length == 0)
             {
                 Console.WriteLine("Please provide a command: 'products' or 'categories'");

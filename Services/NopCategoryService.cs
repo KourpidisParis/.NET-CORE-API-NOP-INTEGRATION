@@ -11,10 +11,12 @@ namespace ErpConnector.Services
     {
         private readonly INopCategoryRepository _nopRepository;
         private readonly IMapper _mapper;
-        public NopCategoryService(INopCategoryRepository nopRepository, IMapper mapper)
+        private readonly ICategoryProcessor _categoryProcessor;
+        public NopCategoryService(INopCategoryRepository nopRepository, IMapper mapper,ICategoryProcessor categoryProcessor)
         {
             _nopRepository = nopRepository;
             _mapper = mapper;
+            _categoryProcessor = categoryProcessor;
         }
 
         public async Task SyncCategories(IEnumerable<CategoryFromApiDto> categories)

@@ -21,7 +21,7 @@ namespace ErpConnector.Repository
             return await Task.FromResult(id);        
         }
 
-        public async Task InsertProduct(Product product)
+        public async Task<int> InsertProduct(Product product)
         {
             string sql = @"
                 INSERT INTO [nop].[dbo].[Product] (
@@ -82,9 +82,9 @@ namespace ErpConnector.Repository
                 );
             ";
 
-            _dapper.Execute(sql, product);
+            var newId = _dapper.LoadDataSingle<int>(sql, product);
 
-            await Task.CompletedTask;
+            return await Task.FromResult(newId);
         }
 
 
@@ -104,6 +104,30 @@ namespace ErpConnector.Repository
                 Price = product.Price,
                 Id = id
             });
+
+            await Task.CompletedTask;
+        }
+
+        public async Task<int?> GetCategoryIdByApiId(string apiId)
+        {
+            var categoryId = _dapper.LoadDataSingle<int?>(
+                "SELECT TOP 1 Id FROM [nop].[dbo].[Category] WHERE ApiId = @ApiId",
+                new { ApiId = apiId });
+
+            return await Task.FromResult(categoryId);
+        }
+
+        public async Task InsertProductCategoryMapping(int productId, int categoryId)
+        {
+            string sql = @"
+                INSERT INTO [nop].[dbo].[Product_Category_Mapping] (
+                    ProductId, CategoryId, IsFeaturedProduct, DisplayOrder
+                )
+                VALUES (
+                    @ProductId, @CategoryId, 0, 0
+                );";
+
+            _dapper.Execute(sql, new { ProductId = productId, CategoryId = categoryId });
 
             await Task.CompletedTask;
         }

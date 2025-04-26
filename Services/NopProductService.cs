@@ -32,18 +32,25 @@ namespace ErpConnector.Services
                     continue;
                 }
 
-                var existingId = await _nopRepository.GetProductIdByExternalId(productModel.ApiId.Value.ToString());
+                var productId = await _nopRepository.GetProductIdByExternalId(productModel.ApiId.Value.ToString());
 
-                if (existingId.HasValue)
+                if (productId.HasValue)
                 {
-                    await _nopRepository.UpdateProduct(productModel, existingId.Value);
+                    await _nopRepository.UpdateProduct(productModel, productId.Value);
                     Console.WriteLine($"Updated: {productModel.Name}");
                 }
                 else
                 {
-                    await _nopRepository.InsertProduct(productModel);
+                    productId = await _nopRepository.InsertProduct(productModel);
                     Console.WriteLine($"Inserted: {productModel.Name}");
                 }
+
+                //After inser/update product
+                // var categoryId = await _nopRepository.GetCategoryIdByApiId(productDto.CategoryApiId);
+                // if (categoryId.HasValue)
+                // {
+                //     await _nopRepository.InsertProductCategoryMapping(productId, categoryId.Value);
+                // }
             }
         }
     }
