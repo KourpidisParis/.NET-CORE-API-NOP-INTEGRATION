@@ -105,6 +105,7 @@ namespace ErpConnector.Models
     public DateTime CreatedOnUtc { get; set; }
     public DateTime? UpdatedOnUtc { get; set; }
     public int? ApiId { get; set; }
+    public string ? Category {get;set;}
    }
    
 }

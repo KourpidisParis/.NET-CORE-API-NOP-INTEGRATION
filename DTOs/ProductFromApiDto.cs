@@ -6,6 +6,7 @@ namespace ErpConnector.DTOs
         public string Title {get;set;}
         public decimal Price { get; set; }
         public string Description { get; set; }
+        public string Category { get; set; }
         public ProductFromApiDto()
         {
             if(Title == null)
@@ -16,6 +17,11 @@ namespace ErpConnector.DTOs
             if(Description == null)
             {
                 Description = "";
+            }
+
+            if(Category == null)
+            {
+                Category = "";
             }
         }
 

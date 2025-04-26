@@ -46,11 +46,11 @@ namespace ErpConnector.Services
                 }
 
                 //After inser/update product
-                // var categoryId = await _nopRepository.GetCategoryIdByApiId(productDto.CategoryApiId);
-                // if (categoryId.HasValue)
-                // {
-                //     await _nopRepository.InsertProductCategoryMapping(productId, categoryId.Value);
-                // }
+                var categoryId = await _nopRepository.GetCategoryIdByApiId(productModel.Category);
+                if (categoryId.HasValue)
+                {
+                    await _nopRepository.InsertProductCategoryMapping(productId.Value, categoryId.Value);
+                }
             }
         }
     }
