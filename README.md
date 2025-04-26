@@ -62,7 +62,7 @@ ErpConnector
 
 ## Technologies Used
 
-- **.NET 8** — for building the console application.
+- **.NET 9** — for building the console application.
 - **Dapper** — lightweight ORM for fast database access.
 - **AutoMapper** — for efficient and clean object-to-object mapping.
 - **NopCommerce** — target platform database (products and categories).
