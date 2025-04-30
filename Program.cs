@@ -45,7 +45,7 @@ namespace ErpConnector
             services.AddTransient<ICategoryProcessor, CategoryProcessor>();
 
             //Mapping
-            services.AddAutoMapper(typeof(MappingProfile));
+            services.AddAutoMapper(typeof(ProductMappingProfile).Assembly);
 
             //Controllers
             services.AddTransient<ProductController>();
