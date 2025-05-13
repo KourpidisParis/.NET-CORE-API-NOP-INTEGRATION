@@ -10,12 +10,10 @@ namespace ErpConnector.Services
     public class NopCategoryService : INopCategoryService
     {
         private readonly INopCategoryRepository _nopRepository;
-        private readonly IMapper _mapper;
         private readonly ICategoryProcessor _categoryProcessor;
         public NopCategoryService(INopCategoryRepository nopRepository, IMapper mapper,ICategoryProcessor categoryProcessor)
         {
             _nopRepository = nopRepository;
-            _mapper = mapper;
             _categoryProcessor = categoryProcessor;
         }
 
@@ -23,7 +21,7 @@ namespace ErpConnector.Services
         {
             foreach (var categoryDto in categories)
             {
-                var categoryModel = _categoryProcessor.ApplyDefaultCategoryValues(_mapper.Map<Category>(categoryDto));
+                var categoryModel = _categoryProcessor.Map(categoryDto);
 
                 if (string.IsNullOrEmpty(categoryModel.ApiId))
                 {

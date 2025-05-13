@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\user\\Desktop\\ErpConnector\\ErpConnector.csproj": {}
+    "C:\\Users\\Παράσχος Κουρπίδης\\Desktop\\.NET-CORE-API-NOP-INTEGRATION\\ErpConnector.csproj": {}
   },
   "projects": {
-    "C:\\Users\\user\\Desktop\\ErpConnector\\ErpConnector.csproj": {
+    "C:\\Users\\Παράσχος Κουρπίδης\\Desktop\\.NET-CORE-API-NOP-INTEGRATION\\ErpConnector.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\user\\Desktop\\ErpConnector\\ErpConnector.csproj",
+        "projectUniqueName": "C:\\Users\\Παράσχος Κουρπίδης\\Desktop\\.NET-CORE-API-NOP-INTEGRATION\\ErpConnector.csproj",
         "projectName": "ErpConnector",
-        "projectPath": "C:\\Users\\user\\Desktop\\ErpConnector\\ErpConnector.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\user\\Desktop\\ErpConnector\\obj\\",
+        "projectPath": "C:\\Users\\Παράσχος Κουρπίδης\\Desktop\\.NET-CORE-API-NOP-INTEGRATION\\ErpConnector.csproj",
+        "packagesPath": "C:\\Users\\Παράσχος Κουρπίδης\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Παράσχος Κουρπίδης\\Desktop\\.NET-CORE-API-NOP-INTEGRATION\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Παράσχος Κουρπίδης\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -42,7 +42,7 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
         "SdkAnalysisLevel": "9.0.200"
       },
@@ -95,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200-preview.0.24575.35/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

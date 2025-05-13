@@ -1,40 +1,42 @@
 using ErpConnector.Models;
 using ErpConnector.Processors.IProcessor;
+using ErpConnector.DTOs;
 
 namespace ErpConnector.Processors
 {
     public class CategoryProcessor : ICategoryProcessor
     {
-        public Category ApplyDefaultCategoryValues(Category category)
+        public Category Map(CategoryFromApiDto categoryDto)
         {
-            // Set default values for fields not provided by API
-            category.MetaKeywords ??= "";
-            category.MetaTitle ??= "";
-            category.PageSizeOptions ??= "";
-            category.Description ??= "";
-            category.MetaDescription ??= "";
-
-            category.CategoryTemplateId = 1; // Default template id
-            category.ParentCategoryId = 0;
-            category.PictureId = 0;
-            category.PageSize = 10; // Default page size
-            category.AllowCustomersToSelectPageSize = false;
-            category.ShowOnHomepage = false;
-            category.IncludeInTopMenu = false;
-            category.SubjectToAcl = false;
-            category.LimitedToStores = false;
-            category.Published = true;
-            category.Deleted = false;
-            category.DisplayOrder = 0;
-            category.CreatedOnUtc = DateTime.UtcNow;
-            category.UpdatedOnUtc = DateTime.UtcNow;
-            category.PriceRangeFiltering = false;
-            category.PriceFrom = 0m;
-            category.PriceTo = 0m;
-            category.ManuallyPriceRange = false;
-            category.RestrictFromVendors = false;
-
-            return category;
+            return new Category
+            {
+                Name = categoryDto.Name ?? "Unnamed Category",
+                MetaKeywords = "",
+                MetaTitle = "",
+                PageSizeOptions = "",
+                Description = "",
+                MetaDescription = "",
+                CategoryTemplateId = 1,
+                ParentCategoryId = 0,
+                PictureId = 0,
+                PageSize = 10,
+                AllowCustomersToSelectPageSize = false,
+                ShowOnHomepage = false,
+                IncludeInTopMenu = false,
+                SubjectToAcl = false,
+                LimitedToStores = false,
+                Published = true,
+                Deleted = false,
+                DisplayOrder = 0,
+                CreatedOnUtc = DateTime.UtcNow,
+                UpdatedOnUtc = DateTime.UtcNow,
+                PriceRangeFiltering = false,
+                PriceFrom = 0m,
+                PriceTo = 0m,
+                ManuallyPriceRange = false,
+                RestrictFromVendors = false,
+                ApiId = categoryDto.Slug ?? ""
+            };
         }
     }
 }
