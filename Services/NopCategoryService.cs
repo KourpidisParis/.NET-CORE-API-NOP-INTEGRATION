@@ -1,7 +1,6 @@
-using AutoMapper;
 using ErpConnector.DTOs;
 using ErpConnector.Models;
-using ErpConnector.Processors.IProcessor;
+using ErpConnector.Mappers.IMappers;
 using ErpConnector.Repository.IRepository;
 using ErpConnector.Services.IServices;
 
@@ -10,18 +9,18 @@ namespace ErpConnector.Services
     public class NopCategoryService : INopCategoryService
     {
         private readonly INopCategoryRepository _nopRepository;
-        private readonly ICategoryProcessor _categoryProcessor;
-        public NopCategoryService(INopCategoryRepository nopRepository, IMapper mapper,ICategoryProcessor categoryProcessor)
+        private readonly ICategoryMapper _categoryMapper;
+        public NopCategoryService(INopCategoryRepository nopRepository, ICategoryMapper categoryMapper)
         {
             _nopRepository = nopRepository;
-            _categoryProcessor = categoryProcessor;
+            _categoryMapper = categoryMapper;
         }
 
         public async Task SyncCategories(IEnumerable<CategoryFromApiDto> categories)
         {
             foreach (var categoryDto in categories)
             {
-                var categoryModel = _categoryProcessor.Map(categoryDto);
+                var categoryModel = _categoryMapper.MapToCategory(categoryDto);
 
                 if (string.IsNullOrEmpty(categoryModel.ApiId))
                 {

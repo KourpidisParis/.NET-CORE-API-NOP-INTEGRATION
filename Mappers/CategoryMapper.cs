@@ -1,16 +1,28 @@
-using ErpConnector.Models;
-using ErpConnector.Processors.IProcessor;
 using ErpConnector.DTOs;
+using ErpConnector.Models;
+using ErpConnector.Mappers.IMappers;
 
-namespace ErpConnector.Processors
+namespace ErpConnector.Mappers
 {
-    public class CategoryProcessor : ICategoryProcessor
+    /// <summary>
+    /// Implementation of category mapping logic
+    /// </summary>
+    public class CategoryMapper : ICategoryMapper
     {
-        public Category Map(CategoryFromApiDto categoryDto)
+        /// <summary>
+        /// Maps a Category DTO from API to a Category domain model with all required default values
+        /// </summary>
+        /// <param name="dto">Category data from API</param>
+        /// <returns>Mapped Category with default values applied</returns>
+        /// <exception cref="ArgumentNullException">Thrown when dto is null</exception>
+        public Category MapToCategory(CategoryFromApiDto dto)
         {
+            if (dto == null)
+                throw new ArgumentNullException(nameof(dto));
+
             return new Category
             {
-                Name = categoryDto.Name ?? "Unnamed Category",
+                Name = dto.Name ?? "Unnamed Category",
                 MetaKeywords = "",
                 MetaTitle = "",
                 PageSizeOptions = "",
@@ -35,7 +47,7 @@ namespace ErpConnector.Processors
                 PriceTo = 0m,
                 ManuallyPriceRange = false,
                 RestrictFromVendors = false,
-                ApiId = categoryDto.Slug ?? ""
+                ApiId = dto.Slug ?? ""
             };
         }
     }

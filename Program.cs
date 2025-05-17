@@ -2,13 +2,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using ErpConnector.Data;
 using ErpConnector.Controllers;
-using ErpConnector.Services;
 using ErpConnector.Repository;
 using ErpConnector.Repository.IRepository;
 using ErpConnector.Services.IServices;
-using ErpConnector.Mapping;
-using ErpConnector.Processors.IProcessor;
-using ErpConnector.Processors;
+using ErpConnector.Services;
+using ErpConnector.Mappers.IMappers;
+using ErpConnector.Mappers;
 
 namespace ErpConnector
 {
@@ -37,15 +36,14 @@ namespace ErpConnector
             //Nop - Product
             services.AddTransient<INopProductRepository, NopProductRepository>(); 
             services.AddTransient<INopProductService, NopProductService>();
-            services.AddTransient<IProductProcessor, ProductProcessor>();
 
             //Nop - Category
             services.AddTransient<INopCategoryRepository, NopCategoryRepository>(); 
             services.AddTransient<INopCategoryService, NopCategoryService>();
-            services.AddTransient<ICategoryProcessor, CategoryProcessor>();
 
-            //Mapping
-            services.AddAutoMapper(typeof(ProductMappingProfile).Assembly);
+            //Mappers
+            services.AddTransient<IProductMapper, ProductMapper>();
+            services.AddTransient<ICategoryMapper, CategoryMapper>();
 
             //Controllers
             services.AddTransient<ProductController>();
