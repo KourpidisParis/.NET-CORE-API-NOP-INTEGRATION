@@ -13,6 +13,7 @@ namespace ErpConnector.Repository
             _httpClient = httpClient;
             _url        = "https://dummyjson.com/";
         }
+        
         public async Task<IEnumerable<ProductFromApiDto>> GetProducts()
         {
             var productsUrl = _url + "products";

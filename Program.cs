@@ -41,6 +41,10 @@ namespace ErpConnector
             services.AddTransient<INopCategoryRepository, NopCategoryRepository>(); 
             services.AddTransient<INopCategoryService, NopCategoryService>();
 
+            //Nop - NopLocalizedProperty
+            services.AddTransient<INopLocalizedPropertyRepository, NopLocalizedPropertyRepository>(); 
+            services.AddTransient<INopLocalizedPropertyService, NopLocalizedPropertyService>(); 
+
             //Mappers
             services.AddTransient<IProductMapper, ProductMapper>();
             services.AddTransient<ICategoryMapper, CategoryMapper>();
@@ -48,6 +52,7 @@ namespace ErpConnector
             //Controllers
             services.AddTransient<ProductController>();
             services.AddTransient<CategoryController>();
+            services.AddTransient<TestController>();
 
             // Build service provider
             var serviceProvider = services.BuildServiceProvider();
@@ -72,12 +77,14 @@ namespace ErpConnector
                     var productController = serviceProvider.GetRequiredService<ProductController>();
                     await productController.SyncProducts();
                     break;
-
                 case "categories":
                     var categoryController = serviceProvider.GetRequiredService<CategoryController>();
                     await categoryController.SyncCategories();
                     break;
-
+                case "test":
+                    var testController = serviceProvider.GetRequiredService<TestController>();
+                    await testController.Main();
+                    break;    
                 default:
                     Console.WriteLine("Invalid command. Use 'products' or 'categories'.");
                     break;

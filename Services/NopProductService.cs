@@ -8,11 +8,13 @@ namespace ErpConnector.Services
 {
     public class NopProductService : INopProductService
     {
-        private readonly INopProductRepository _nopRepository;
+        private readonly INopProductRepository _nopProductRepository;
+        private readonly INopLocalizedPropertyService _nopLocalizedPropertyService;
         private readonly IProductMapper _productMapper;
-        public NopProductService(INopProductRepository nopRepository,IProductMapper productMapper)
+        public NopProductService(INopProductRepository nopRepository,INopLocalizedPropertyService nopLocalizedPropertyService,IProductMapper productMapper)
         {
-            _nopRepository = nopRepository;
+            _nopProductRepository = nopRepository;
+            _nopLocalizedPropertyService = nopLocalizedPropertyService;
             _productMapper = productMapper;
         }
 
@@ -28,21 +30,33 @@ namespace ErpConnector.Services
                     continue;
                 }
 
-                var productId = await _nopRepository.GetProductIdByExternalId(productModel.ApiId.Value.ToString());
+                var productId = await _nopProductRepository.GetProductIdByExternalId(productModel.ApiId.Value.ToString());
 
                 if (productId.HasValue)
                 {
-                    await _nopRepository.UpdateProduct(productModel, productId.Value);
+                    await _nopProductRepository.UpdateProduct(productModel, productId.Value);
                     Console.WriteLine($"Updated: {productModel.Name}");
                 }
                 else
                 {
-                    productId = await _nopRepository.InsertProduct(productModel);
+                    productId = await _nopProductRepository.InsertProduct(productModel);
                     Console.WriteLine($"Inserted: {productModel.Name}");
                 }
 
-                //Category
+                //Connect product with category
                 await MapProductToCategory(productModel, productId);
+
+                //Add Name for all languages
+                 var localizedPropertyObject = new LocalizedProperty
+                {
+                    LocaleKeyGroup = "Product",
+                    LocaleKey = "Name",
+                    LocaleValue = productModel.Name,
+                    LanguageId = 2,  
+                    EntityId = (int)productId
+                };
+                
+                await _nopLocalizedPropertyService.HandleLocalizedProperty(localizedPropertyObject);
             }
         }
 
@@ -54,7 +68,7 @@ namespace ErpConnector.Services
                 return;
             }
 
-            var categoryId = await _nopRepository.GetCategoryIdByApiId(productModel.Category);
+            var categoryId = await _nopProductRepository.GetCategoryIdByApiId(productModel.Category);
 
             if (!categoryId.HasValue)
             {
@@ -62,7 +76,7 @@ namespace ErpConnector.Services
                 return;
             }
 
-            bool mappingExists =  _nopRepository.GetProductCategoryMapping(productId.Value, categoryId.Value);
+            bool mappingExists =  _nopProductRepository.GetProductCategoryMapping(productId.Value, categoryId.Value);
             
             if (mappingExists)
             {
@@ -70,11 +84,9 @@ namespace ErpConnector.Services
             }
             else
             {
-                await _nopRepository.InsertProductCategoryMapping(productId.Value, categoryId.Value);
+                await _nopProductRepository.InsertProductCategoryMapping(productId.Value, categoryId.Value);
                 Console.WriteLine($"Mapped ProductId {productId} to CategoryId {categoryId.Value}");
             }
         }
-
-
     }
 }
