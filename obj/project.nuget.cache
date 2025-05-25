@@ -1,17 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "BaFrX//JxSI=",
+  "dgSpecHash": "0rmA9LPe0vI=",
   "success": true,
   "projectFilePath": "C:\\Users\\Παράσχος Κουρπίδης\\Desktop\\.NET-CORE-API-NOP-INTEGRATION\\ErpConnector.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Παράσχος Κουρπίδης\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
-    "C:\\Users\\Παράσχος Κουρπίδης\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Παράσχος Κουρπίδης\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Παράσχος Κουρπίδης\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
     "C:\\Users\\Παράσχος Κουρπίδης\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
     "C:\\Users\\Παράσχος Κουρπίδης\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\Παράσχος Κουρπίδης\\.nuget\\packages\\microsoft.bcl.cryptography\\9.0.0\\microsoft.bcl.cryptography.9.0.0.nupkg.sha512",
-    "C:\\Users\\Παράσχος Κουρπίδης\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Παράσχος Κουρπίδης\\.nuget\\packages\\microsoft.data.sqlclient\\6.0.1\\microsoft.data.sqlclient.6.0.1.nupkg.sha512",
     "C:\\Users\\Παράσχος Κουρπίδης\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\6.0.2\\microsoft.data.sqlclient.sni.runtime.6.0.2.nupkg.sha512",
     "C:\\Users\\Παράσχος Κουρπίδης\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.0\\microsoft.extensions.caching.abstractions.9.0.0.nupkg.sha512",

@@ -18,9 +18,7 @@ namespace ErpConnector.Repository
                 SELECT *
                 FROM [nop].[dbo].[LocalizedProperty]";
             
-            var localizedProperties = _dapper.LoadData<LocalizedProperty>(sql);
-            
-            return await Task.FromResult(localizedProperties);
+            return await _dapper.LoadDataAsync<LocalizedProperty>(sql);            
         }
 
         public async Task<int> InsertLocalizedProperty(LocalizedProperty localizedProperty)
@@ -32,9 +30,7 @@ namespace ErpConnector.Repository
                 (@LocaleKeyGroup, @LocaleKey, @LocaleValue, @LanguageId, @EntityId);
                 SELECT CAST(SCOPE_IDENTITY() AS INT)";
             
-            var newId = _dapper.LoadDataSingle<int>(sql, localizedProperty);
-            
-            return await Task.FromResult(newId);
+            return await _dapper.LoadDataSingleAsync<int>(sql, localizedProperty);            
         }
 
         public async Task UpdateLocalizedProperty(int id, string localeValue)
@@ -44,9 +40,7 @@ namespace ErpConnector.Repository
                 SET LocaleValue = @LocaleValue
                 WHERE Id = @Id";
             
-            _dapper.Execute(sql, new { Id = id, LocaleValue = localeValue });
-            
-            await Task.CompletedTask;
+            await _dapper.ExecuteAsync(sql, new { Id = id, LocaleValue = localeValue });
         }
 
         public async Task<int?> GetLocalizedPropertyId(string localeKeyGroup, string localeKey, int entityId, int languageId)
@@ -58,14 +52,12 @@ namespace ErpConnector.Repository
                 AND EntityId = @EntityId
                 AND LanguageId = @LanguageId";
             
-            var id = _dapper.LoadDataSingle<int?>(sql, new { 
+            return await _dapper.LoadDataSingleAsync<int?>(sql, new { 
                 LocaleKeyGroup = localeKeyGroup,
                 LocaleKey = localeKey,
                 EntityId = entityId,
                 LanguageId = languageId
-            });
-            
-            return await Task.FromResult(id);
+            });            
         }
     }
 }

@@ -15,11 +15,9 @@ namespace ErpConnector.Repository
 
         public async Task<int?> GetCategoryIdByExternalId(string apiId)
         {
-            var id = _dapper.LoadDataSingle<int?>(
+            return await _dapper.LoadDataSingleAsync<int?>(
                 "SELECT TOP 1 Id FROM [nop].[dbo].[Category] WHERE ApiId = @ApiId",
                 new { ApiId = apiId });
-
-            return await Task.FromResult(id);
         }
 
         public async Task InsertCategory(Category category)
@@ -38,8 +36,7 @@ namespace ErpConnector.Repository
                  @DisplayOrder, @CreatedOnUtc, @UpdatedOnUtc, @PriceRangeFiltering, @PriceFrom, @PriceTo, 
                  @ManuallyPriceRange, @RestrictFromVendors, @ApiId);";
 
-            _dapper.Execute(sql, category);
-            await Task.CompletedTask;
+            await _dapper.ExecuteAsync(sql, category);
         }
 
         public async Task UpdateCategory(Category category, int id)
@@ -73,7 +70,7 @@ namespace ErpConnector.Repository
                     RestrictFromVendors = @RestrictFromVendors
                 WHERE Id = @Id;";
 
-            _dapper.Execute(sql, new
+            await _dapper.ExecuteAsync(sql, new
             {
                 category.Name,
                 category.MetaKeywords,
@@ -102,8 +99,6 @@ namespace ErpConnector.Repository
                 category.RestrictFromVendors,
                 Id = id
             });
-
-            await Task.CompletedTask;
         }
     }
 }

@@ -8,39 +8,45 @@ namespace ErpConnector.Data
 {
     public class DataContextDapper
     {
-        private readonly IConfiguration _config;
         private readonly string _connectionString;
 
         public DataContextDapper(IConfiguration config)
         {
-            _config = config;
-            _connectionString = _config.GetConnectionString("DefaultConnection")
-            ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            _connectionString = config.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
         }
 
-        public T? LoadDataSingle<T>(string sql, object? parameters = null)
+        private async Task<SqlConnection> CreateConnectionAsync()
         {
-            using IDbConnection dbConnection = new SqlConnection(_connectionString);
-            return dbConnection.QueryFirstOrDefault<T>(sql, parameters);
+            var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+            return connection;
         }
 
-        public IEnumerable<T> LoadData<T>(string sql, object? parameters = null)
+        public async Task<T?> LoadDataSingleAsync<T>(string sql, object? parameters = null)
         {
-            using IDbConnection dbConnection = new SqlConnection(_connectionString);
-            return dbConnection.Query<T>(sql, parameters);
+            await using var connection = await CreateConnectionAsync();
+            return await connection.QueryFirstOrDefaultAsync<T>(sql, parameters);
         }
 
-        public bool Execute(string sql, object? parameters = null)
+        public async Task<IEnumerable<T>> LoadDataAsync<T>(string sql, object? parameters = null)
         {
-            using IDbConnection dbConnection = new SqlConnection(_connectionString);
-            return dbConnection.Execute(sql, parameters) > 0;
+            await using var connection = await CreateConnectionAsync();
+            return await connection.QueryAsync<T>(sql, parameters);
         }
-        public IEnumerable<Product> GetProducts()
+
+        public async Task<bool> ExecuteAsync(string sql, object? parameters = null)
         {
-            // using var connection = CreateConnection();
-            using IDbConnection dbConnection = new SqlConnection(_connectionString);
-            string sql = "SELECT TOP 10 Id, Name, Sku, Price FROM [nop].[dbo].[Product]";
-            return dbConnection.Query<Product>(sql).ToList();
+            await using var connection = await CreateConnectionAsync();
+            var rowsAffected = await connection.ExecuteAsync(sql, parameters);
+            return rowsAffected > 0;
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsAsync()
+        {
+            const string sql = "SELECT TOP 10 Id, Name, Sku, Price FROM [nop].[dbo].[Product]";
+            await using var connection = await CreateConnectionAsync();
+            return await connection.QueryAsync<Product>(sql);
         }
     }
 }

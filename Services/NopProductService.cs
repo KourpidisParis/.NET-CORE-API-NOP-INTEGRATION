@@ -46,7 +46,7 @@ namespace ErpConnector.Services
                 //Connect product with category
                 await MapProductToCategory(productModel, productId);
 
-                //Add Name for all languages
+                //Add Name for greek language
                  var localizedPropertyObject = new LocalizedProperty
                 {
                     LocaleKeyGroup = "Product",
@@ -76,7 +76,7 @@ namespace ErpConnector.Services
                 return;
             }
 
-            bool mappingExists =  _nopProductRepository.GetProductCategoryMapping(productId.Value, categoryId.Value);
+            bool mappingExists =  await _nopProductRepository.GetProductCategoryMapping(productId.Value, categoryId.Value);
             
             if (mappingExists)
             {

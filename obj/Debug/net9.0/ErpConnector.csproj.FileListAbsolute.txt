@@ -87,8 +87,6 @@ C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATI
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\ErpConnector.runtimeconfig.json
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\ErpConnector.dll
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\ErpConnector.pdb
-C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\AutoMapper.dll
-C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\Azure.Core.dll
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\Azure.Identity.dll
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\Dapper.dll

@@ -15,11 +15,9 @@ namespace ErpConnector.Repository
         //Product Base Section
         public async Task<int?> GetProductIdByExternalId(string apiId)
         {
-           var id = _dapper.LoadDataSingle<int?>(
+           return await _dapper.LoadDataSingleAsync<int?>(
                 "SELECT TOP 1 Id FROM [nop].[dbo].[Product] WHERE ApiId = @ApiId",
                 new { ApiId = apiId });
-
-            return await Task.FromResult(id);        
         }
 
         public async Task<int> InsertProduct(Product product)
@@ -84,9 +82,7 @@ namespace ErpConnector.Repository
                 SELECT CAST(SCOPE_IDENTITY() AS INT)
             ";
 
-            var newId = _dapper.LoadDataSingle<int>(sql, product);
-
-            return await Task.FromResult(newId);
+            return await _dapper.LoadDataSingleAsync<int>(sql, product);
         }
 
 
@@ -99,25 +95,21 @@ namespace ErpConnector.Repository
                     Price = @Price
                 WHERE Id = @Id;";
 
-            _dapper.Execute(sql, new
+            await _dapper.ExecuteAsync(sql, new
             {
                 Name = product.Name,
                 Description = product.FullDescription,
                 Price = product.Price,
                 Id = id
             });
-
-            await Task.CompletedTask;
         }
 
         //Product to Category section
         public async Task<int?> GetCategoryIdByApiId(string? apiId)
         {
-            var categoryId = _dapper.LoadDataSingle<int?>(
+            return await _dapper.LoadDataSingleAsync<int?>(
                 "SELECT TOP 1 Id FROM [nop].[dbo].[Category] WHERE ApiId = @ApiId",
                 new { ApiId = apiId });
-
-            return await Task.FromResult(categoryId);
         }
 
         public async Task InsertProductCategoryMapping(int productId, int categoryId)
@@ -130,77 +122,18 @@ namespace ErpConnector.Repository
                     @ProductId, @CategoryId, 0, 0
                 );";
 
-            _dapper.Execute(sql, new { ProductId = productId, CategoryId = categoryId });
-
-            await Task.CompletedTask;
+            await _dapper.ExecuteAsync(sql, new { ProductId = productId, CategoryId = categoryId });
         }
 
-        public bool GetProductCategoryMapping(int productId, int categoryId)
+        public async Task<bool> GetProductCategoryMapping(int productId, int categoryId)
         {
             string sql = @"SELECT COUNT(1) 
                           FROM [nop].[dbo].[Product_Category_Mapping] 
                           WHERE ProductId = @ProductId AND CategoryId = @CategoryId";
             
-            var result = _dapper.LoadDataSingle<int>(sql, new { ProductId = productId, CategoryId = categoryId });
+            var result = await _dapper.LoadDataSingleAsync<int>(sql, new { ProductId = productId, CategoryId = categoryId });
 
             return result > 0;
-        }
-
-        //Product Descriptions section
-        public async Task<IEnumerable<LocalizedProperty>> GetAllLocalizedProperties()
-        {
-            string sql = @"
-                SELECT *
-                FROM [nop].[dbo].[LocalizedProperty]";
-            
-            var localizedProperties = _dapper.LoadData<LocalizedProperty>(sql);
-            
-            return await Task.FromResult(localizedProperties);
-        }
-
-        public async Task<int> InsertLocalizedProperty(LocalizedProperty localizedProperty)
-        {
-            string sql = @"
-                INSERT INTO [nop].[dbo].[LocalizedProperty]
-                (LocaleKeyGroup, LocaleKey, LocaleValue, LanguageId, EntityId)
-                VALUES
-                (@LocaleKeyGroup, @LocaleKey, @LocaleValue, @LanguageId, @EntityId);
-                SELECT CAST(SCOPE_IDENTITY() AS INT)";
-            
-            var newId = _dapper.LoadDataSingle<int>(sql, localizedProperty);
-            
-            return await Task.FromResult(newId);
-        }
-
-        public async Task UpdateLocalizedProperty(int id, string localeValue)
-        {
-            string sql = @"
-                UPDATE [nop].[dbo].[LocalizedProperty]
-                SET LocaleValue = @LocaleValue
-                WHERE Id = @Id";
-            
-            _dapper.Execute(sql, new { Id = id, LocaleValue = localeValue });
-            
-            await Task.CompletedTask;
-        }
-
-        public async Task<int?> GetLocalizedPropertyId(string localeKeyGroup, string localeKey, int entityId, int languageId)
-        {
-            string sql = @"
-                SELECT Id FROM [nop].[dbo].[LocalizedProperty]
-                WHERE LocaleKeyGroup = @LocaleKeyGroup
-                AND LocaleKey = @LocaleKey
-                AND EntityId = @EntityId
-                AND LanguageId = @LanguageId";
-            
-            var id = _dapper.LoadDataSingle<int?>(sql, new { 
-                LocaleKeyGroup = localeKeyGroup,
-                LocaleKey = localeKey,
-                EntityId = entityId,
-                LanguageId = languageId
-            });
-            
-            return await Task.FromResult(id);
         }
     }
 }

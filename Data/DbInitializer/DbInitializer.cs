@@ -13,7 +13,7 @@ namespace ErpConnector.Services
 
         public async Task InitializeProductTableAsync()
         {
-            var columnExists = _dapper.LoadDataSingle<int>(
+            var columnExists = await _dapper.LoadDataSingleAsync<int>(
                 @"SELECT COUNT(*) 
                   FROM INFORMATION_SCHEMA.COLUMNS 
                   WHERE TABLE_NAME = 'Product' AND COLUMN_NAME = 'ApiId'");
@@ -29,20 +29,18 @@ namespace ErpConnector.Services
                     ALTER TABLE [nop].[dbo].[Product]
                     ADD CONSTRAINT UQ_Product_ApiId UNIQUE (ApiId);";
 
-                _dapper.Execute(alterTableSql);
+                await _dapper.ExecuteAsync(alterTableSql);
                 Console.WriteLine("'ApiId' column added.");
             }
             else
             {
                 Console.WriteLine("'ApiId' column already exists.");
             }
-
-            await Task.CompletedTask;
         }
 
         public async Task InitializeCategoryTableAsync()
         {
-            var columnExists = _dapper.LoadDataSingle<int>(
+            var columnExists = await _dapper.LoadDataSingleAsync<int>(
                 @"SELECT COUNT(*) 
                   FROM INFORMATION_SCHEMA.COLUMNS 
                   WHERE TABLE_NAME = 'Category' AND COLUMN_NAME = 'ApiId'");
@@ -58,15 +56,13 @@ namespace ErpConnector.Services
                     ALTER TABLE [nop].[dbo].[Category]
                     ADD CONSTRAINT UQ_Category_ApiId UNIQUE (ApiId);";
 
-                _dapper.Execute(alterTableSql);
+                await _dapper.ExecuteAsync(alterTableSql);
                 Console.WriteLine("'ApiId' column added.");
             }
             else
             {
                 Console.WriteLine("'ApiId' column already exists.");
             }
-
-            await Task.CompletedTask;
         }
     }
 }

@@ -12,6 +12,6 @@ namespace ErpConnector.Repository.IRepository
         //Product to Category
         Task<int?> GetCategoryIdByApiId(string? apiId);
         Task InsertProductCategoryMapping(int productId, int categoryId);
-        bool GetProductCategoryMapping(int productId, int categoryId);
+        Task<bool> GetProductCategoryMapping(int productId, int categoryId);
     }
 }
