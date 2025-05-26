@@ -8,6 +8,7 @@ using ErpConnector.Services.IServices;
 using ErpConnector.Services;
 using ErpConnector.Mappers.IMappers;
 using ErpConnector.Mappers;
+using ErpConnector.Models;
 
 namespace ErpConnector
 {
@@ -30,6 +31,7 @@ namespace ErpConnector
             services.AddScoped<IDbInitializer, DbInitializer>();
 
             //Api
+            services.Configure<ApiSettings>(configuration.GetSection("ApiSettings"));
             services.AddHttpClient<IApiRepository, ApiRepository>(); 
             services.AddTransient<IApiService, ApiService>();
 

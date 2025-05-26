@@ -1,22 +1,27 @@
 using System.Text.Json;
 using ErpConnector.DTOs;
+using ErpConnector.Models;
 using ErpConnector.Repository.IRepository;
+using Microsoft.Extensions.Options;
+
 
 namespace ErpConnector.Repository
 {
     public class ApiRepository : IApiRepository
     {
         private readonly HttpClient _httpClient;
-        private readonly string _url;
-        public ApiRepository(HttpClient httpClient)
+        private readonly ApiSettings _apiSettings;
+
+        public ApiRepository(HttpClient httpClient,IOptions<ApiSettings> apiSettings)
         {
             _httpClient = httpClient;
-            _url        = "https://dummyjson.com/";
+            _apiSettings = apiSettings.Value;
         }
         
         public async Task<IEnumerable<ProductFromApiDto>> GetProducts()
         {
-            var productsUrl = _url + "products";
+            var productsUrl = _apiSettings.BaseUrl.TrimEnd('/') + "/" + _apiSettings.ProductsEndpoint;
+
             var response = await _httpClient.GetAsync(productsUrl);
 
             if (!response.IsSuccessStatusCode)
@@ -41,7 +46,7 @@ namespace ErpConnector.Repository
 
         public async Task<IEnumerable<CategoryFromApiDto>> GetCategories()
         {
-            var categoriesUrl = _url + "products/categories";
+            var categoriesUrl = _apiSettings.BaseUrl.TrimEnd('/') + "/" + _apiSettings.CategoriesEndpoint;
             
             var response = await _httpClient.GetAsync(categoriesUrl);
 
