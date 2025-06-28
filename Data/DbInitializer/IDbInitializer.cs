@@ -1,4 +1,4 @@
-namespace ErpConnector.Services
+namespace ErpConnector.Data
 {
     public interface IDbInitializer
     {

@@ -162,3 +162,5 @@ C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATI
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\obj\Debug\net9.0\ErpConnector.pdb
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\obj\Debug\net9.0\ErpConnector.genruntimeconfig.cache
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\obj\Debug\net9.0\ref\ErpConnector.dll
+C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\Microsoft.Extensions.Logging.Configuration.dll
+C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\Microsoft.Extensions.Logging.Console.dll

@@ -1,67 +1,107 @@
 using ErpConnector.Data;
+using Microsoft.Extensions.Logging;
+using Microsoft.Data.SqlClient;
 
-namespace ErpConnector.Services
+namespace ErpConnector.Data
 {
     public class DbInitializer : IDbInitializer
     {
+        private readonly ILogger<DbInitializer> _logger;
         private readonly DataContextDapper _dapper;
 
-        public DbInitializer(DataContextDapper dapper)
+        public DbInitializer(ILogger<DbInitializer> logger, DataContextDapper dapper)
         {
+            _logger = logger;
             _dapper = dapper;
         }
 
         public async Task InitializeProductTableAsync()
         {
-            var columnExists = await _dapper.LoadDataSingleAsync<int>(
-                @"SELECT COUNT(*) 
-                  FROM INFORMATION_SCHEMA.COLUMNS 
-                  WHERE TABLE_NAME = 'Product' AND COLUMN_NAME = 'ApiId'");
-
-            if (columnExists == 0)
+            try
             {
-                Console.WriteLine("Adding 'ApiId' column to Product table...");
+                _logger.LogInformation("Checking Product table for ApiId column");
+                
+                var columnExists = await _dapper.LoadDataSingleAsync<int>(
+                    @"SELECT COUNT(*) 
+                      FROM INFORMATION_SCHEMA.COLUMNS 
+                      WHERE TABLE_NAME = 'Product' AND COLUMN_NAME = 'ApiId'");
 
-                string alterTableSql = @"
-                    ALTER TABLE [nop].[dbo].[Product]
-                    ADD ApiId VARCHAR(255) NULL;
+                if (columnExists == 0)
+                {
+                    _logger.LogInformation("Adding 'ApiId' column to Product table");
+                    Console.WriteLine("Adding 'ApiId' column to Product table...");
 
-                    ALTER TABLE [nop].[dbo].[Product]
-                    ADD CONSTRAINT UQ_Product_ApiId UNIQUE (ApiId);";
+                    string alterTableSql = @"
+                        ALTER TABLE [nop].[dbo].[Product]
+                        ADD ApiId VARCHAR(255) NULL;
 
-                await _dapper.ExecuteAsync(alterTableSql);
-                Console.WriteLine("'ApiId' column added.");
+                        ALTER TABLE [nop].[dbo].[Product]
+                        ADD CONSTRAINT UQ_Product_ApiId UNIQUE (ApiId);";
+
+                    await _dapper.ExecuteAsync(alterTableSql);
+                    _logger.LogInformation("'ApiId' column added successfully to Product table");
+                    Console.WriteLine("'ApiId' column added.");
+                }
+                else
+                {
+                    _logger.LogDebug("'ApiId' column already exists in Product table");
+                    Console.WriteLine("'ApiId' column already exists.");
+                }
             }
-            else
+            catch (SqlException ex)
             {
-                Console.WriteLine("'ApiId' column already exists.");
+                _logger.LogError(ex, "SQL error during Product table initialization");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unexpected error during Product table initialization");
+                throw;
             }
         }
 
         public async Task InitializeCategoryTableAsync()
         {
-            var columnExists = await _dapper.LoadDataSingleAsync<int>(
-                @"SELECT COUNT(*) 
-                  FROM INFORMATION_SCHEMA.COLUMNS 
-                  WHERE TABLE_NAME = 'Category' AND COLUMN_NAME = 'ApiId'");
-
-            if (columnExists == 0)
+            try
             {
-                Console.WriteLine("Adding 'ApiId' column to Category table...");
+                _logger.LogInformation("Checking Category table for ApiId column");
+                
+                var columnExists = await _dapper.LoadDataSingleAsync<int>(
+                    @"SELECT COUNT(*) 
+                      FROM INFORMATION_SCHEMA.COLUMNS 
+                      WHERE TABLE_NAME = 'Category' AND COLUMN_NAME = 'ApiId'");
 
-                string alterTableSql = @"
-                    ALTER TABLE [nop].[dbo].[Category]
-                    ADD ApiId VARCHAR(255) NULL;
+                if (columnExists == 0)
+                {
+                    _logger.LogInformation("Adding 'ApiId' column to Category table");
+                    Console.WriteLine("Adding 'ApiId' column to Category table...");
 
-                    ALTER TABLE [nop].[dbo].[Category]
-                    ADD CONSTRAINT UQ_Category_ApiId UNIQUE (ApiId);";
+                    string alterTableSql = @"
+                        ALTER TABLE [nop].[dbo].[Category]
+                        ADD ApiId VARCHAR(255) NULL;
 
-                await _dapper.ExecuteAsync(alterTableSql);
-                Console.WriteLine("'ApiId' column added.");
+                        ALTER TABLE [nop].[dbo].[Category]
+                        ADD CONSTRAINT UQ_Category_ApiId UNIQUE (ApiId);";
+
+                    await _dapper.ExecuteAsync(alterTableSql);
+                    _logger.LogInformation("'ApiId' column added successfully to Category table");
+                    Console.WriteLine("'ApiId' column added.");
+                }
+                else
+                {
+                    _logger.LogDebug("'ApiId' column already exists in Category table");
+                    Console.WriteLine("'ApiId' column already exists.");
+                }
             }
-            else
+            catch (SqlException ex)
             {
-                Console.WriteLine("'ApiId' column already exists.");
+                _logger.LogError(ex, "SQL error during Category table initialization");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unexpected error during Category table initialization");
+                throw;
             }
         }
     }
