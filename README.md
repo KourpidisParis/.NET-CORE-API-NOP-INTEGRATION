@@ -30,30 +30,32 @@ ErpConnector
 │
 ├── DTOs
 │    ├── ProductFromApiDto.cs
+|    ├── ProductsResponseDto.cs  
 │    └── CategoryFromApiDto.cs
 │
-├── Mapping
-│    └── MappingProfile.cs
+├── Mappers
+│    ├── ProductController.cs
+│    └── CategoryController.cs
 │
 ├── Models
-│    ├── Product.cs
-│    └── Category.cs
-│
-├── Processors
-│    ├── ProductProcessor.cs
-│    └── CategoryProcessor.cs
+│    ├── CategoryMapper.cs
+|    ├── LocalizedProperty.cs
+│    └── ProductMapper.cs
 │
 ├── Data/Repository
 │    ├── ApiRepository.cs
 │    ├── NopProductRepository.cs
+│    ├── NopLocalizedPropertyRepository.cs
 │    └── NopCategoryRepository.cs
 │
 ├── Services
 │    ├── ApiService.cs
 │    ├── NopProductService.cs
+|    ├── NopLocalizedPropertyService.cs
 │    └── NopCategoryService.cs
 │
 ├── Data
+|    ├── DbInitializer.cs
 │    └── DataContextDapper.cs
 │
 ├── Program.cs
@@ -64,7 +66,6 @@ ErpConnector
 
 - **.NET 9** — for building the console application.
 - **Dapper** — lightweight ORM for fast database access.
-- **AutoMapper** — for efficient and clean object-to-object mapping.
 - **NopCommerce** — target platform database (products and categories).
 - **Dependency Injection (DI)** — for clean architecture and loose coupling.
 - **HttpClient** — for API communication.
