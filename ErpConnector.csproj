@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="9.0.3" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
   </ItemGroup>
   
   <ItemGroup>

@@ -13,12 +13,14 @@ namespace ErpConnector.Services
         private readonly ILogger<NopCategoryService> _logger;
         private readonly INopCategoryRepository _nopRepository;
         private readonly ICategoryMapper _categoryMapper;
+        private readonly IValidationService _validationService;
         
-        public NopCategoryService(ILogger<NopCategoryService> logger, INopCategoryRepository nopRepository, ICategoryMapper categoryMapper)
+        public NopCategoryService(ILogger<NopCategoryService> logger, INopCategoryRepository nopRepository, ICategoryMapper categoryMapper, IValidationService validationService)
         {
             _logger = logger;
             _nopRepository = nopRepository;
             _categoryMapper = categoryMapper;
+            _validationService = validationService;
         }
 
         public async Task SyncCategories(IEnumerable<CategoryFromApiDto> categories)
@@ -27,13 +29,25 @@ namespace ErpConnector.Services
             var processedCount = 0;
             var errorCount = 0;
             var skippedCount = 0;
+            var validationErrorCount = 0;
 
             _logger.LogInformation("Starting sync of {TotalCount} categories", totalCategories);
+            Console.WriteLine($"🔍 Validating {totalCategories} categories...");
 
             foreach (var categoryDto in categories)
             {
                 try
                 {
+                    // Validate category first
+                    var validationResult = _validationService.ValidateCategory(categoryDto);
+                    
+                    if (!_validationService.IsValid<CategoryFromApiDto>(validationResult, out var validationErrors))
+                    {
+                        validationErrorCount++;
+                        _logger.LogWarning("Invalid category {CategoryName}: {Errors}", 
+                            categoryDto.Name, string.Join(", ", validationErrors));
+                        continue; // Skip invalid category
+                    }
                     var categoryModel = _categoryMapper.MapToCategory(categoryDto);
 
                     if (string.IsNullOrEmpty(categoryModel.ApiId))
@@ -76,10 +90,10 @@ namespace ErpConnector.Services
                 }
             }
 
-            _logger.LogInformation("Category sync completed. Processed: {Processed}, Errors: {Errors}, Skipped: {Skipped}", 
-                processedCount, errorCount, skippedCount);
+            _logger.LogInformation("Category sync completed. Processed: {Processed}, Errors: {Errors}, Skipped: {Skipped}, ValidationErrors: {ValidationErrors}", 
+                processedCount, errorCount, skippedCount, validationErrorCount);
                 
-            Console.WriteLine($"📊 Summary: {processedCount} processed, {errorCount} errors, {skippedCount} skipped");
+            Console.WriteLine($"📊 Summary: {processedCount} processed, {errorCount} errors, {skippedCount} skipped, {validationErrorCount} validation errors");
 
             if (errorCount > 0)
             {
