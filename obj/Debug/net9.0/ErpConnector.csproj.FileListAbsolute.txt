@@ -164,3 +164,4 @@ C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATI
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\obj\Debug\net9.0\ref\ErpConnector.dll
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\Microsoft.Extensions.Logging.Configuration.dll
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\Microsoft.Extensions.Logging.Console.dll
+C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\bin\Debug\net9.0\FluentValidation.dll

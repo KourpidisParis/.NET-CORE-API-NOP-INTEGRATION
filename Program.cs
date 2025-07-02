@@ -13,6 +13,10 @@ using ErpConnector.Models;
 using ErpConnector.Data;
 using Microsoft.Data.SqlClient;
 using System.Text.Json;
+using FluentValidation;
+using ErpConnector.Validators;
+using ErpConnector.DTOs;
+using ErpConnector.Controllers;
 
 namespace ErpConnector
 {
@@ -66,10 +70,16 @@ namespace ErpConnector
                 services.AddTransient<IProductMapper, ProductMapper>();
                 services.AddTransient<ICategoryMapper, CategoryMapper>();
 
+                //Validators
+                services.AddTransient<IValidator<CategoryFromApiDto>, CategoryFromApiDtoValidator>();
+                services.AddTransient<IValidator<ProductFromApiDto>, ProductFromApiDtoValidator>();
+                services.AddTransient<IValidationService, ValidationService>();
+
                 //Controllers
                 services.AddTransient<ProductController>();
                 services.AddTransient<CategoryController>();
                 services.AddTransient<TestController>();
+                services.AddTransient<ValidationTestController>();
 
                 // Build service provider
                 var serviceProvider = services.BuildServiceProvider();
@@ -96,7 +106,7 @@ namespace ErpConnector
                 if (args.Length == 0)
                 {
                     logger.LogWarning("No command provided");
-                    Console.WriteLine("Please provide a command: 'products' or 'categories'");
+                    Console.WriteLine("Please provide a command: 'products', 'categories', 'test', or 'validate'");
                     return;
                 }
 
@@ -117,10 +127,14 @@ namespace ErpConnector
                     case "test":
                         var testController = serviceProvider.GetRequiredService<TestController>();
                         success = await testController.Main();
-                        break;    
+                        break;
+                    case "validate":
+                        var validationTestController = serviceProvider.GetRequiredService<ValidationTestController>();
+                        success = await validationTestController.TestValidation();
+                        break;
                     default:
                         logger.LogWarning("Invalid command provided: {Command}", command);
-                        Console.WriteLine("Invalid command. Use 'products' or 'categories'.");
+                        Console.WriteLine("Invalid command. Use 'products', 'categories', 'test', or 'validate'.");
                         return;
                 }
 

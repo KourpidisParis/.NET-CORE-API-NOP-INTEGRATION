@@ -14,13 +14,15 @@ namespace ErpConnector.Services
         private readonly INopProductRepository _nopProductRepository;
         private readonly INopLocalizedPropertyService _nopLocalizedPropertyService;
         private readonly IProductMapper _productMapper;
+        private readonly IValidationService _validationService;
         
-        public NopProductService(ILogger<NopProductService> logger, INopProductRepository nopRepository, INopLocalizedPropertyService nopLocalizedPropertyService, IProductMapper productMapper)
+        public NopProductService(ILogger<NopProductService> logger, INopProductRepository nopRepository, INopLocalizedPropertyService nopLocalizedPropertyService, IProductMapper productMapper, IValidationService validationService)
         {
             _logger = logger;
             _nopProductRepository = nopRepository;
             _nopLocalizedPropertyService = nopLocalizedPropertyService;
             _productMapper = productMapper;
+            _validationService = validationService;
         }
 
         public async Task SyncProducts(IEnumerable<ProductFromApiDto> products)
@@ -29,13 +31,25 @@ namespace ErpConnector.Services
             var processedCount = 0;
             var errorCount = 0;
             var skippedCount = 0;
+            var validationErrorCount = 0;
 
             _logger.LogInformation("Starting sync of {TotalCount} products", totalProducts);
+            Console.WriteLine($"🔍 Validating {totalProducts} products...");
 
             foreach (var productDto in products)
             {
                 try
                 {
+                    // Validate product first
+                    var validationResult = _validationService.ValidateProduct(productDto);
+                    
+                    if (!_validationService.IsValid<ProductFromApiDto>(validationResult, out var validationErrors))
+                    {
+                        validationErrorCount++;
+                        _logger.LogWarning("Invalid product {ProductTitle} (ID: {ProductId}): {Errors}", 
+                            productDto.Title, productDto.Id, string.Join(", ", validationErrors));
+                        continue; // Skip invalid product
+                    }
                     var productModel = _productMapper.MapToProduct(productDto);
 
                     if (productModel.ApiId == null)
@@ -109,10 +123,10 @@ namespace ErpConnector.Services
                 }
             }
 
-            _logger.LogInformation("Product sync completed. Processed: {Processed}, Errors: {Errors}, Skipped: {Skipped}", 
-                processedCount, errorCount, skippedCount);
+            _logger.LogInformation("Product sync completed. Processed: {Processed}, Errors: {Errors}, Skipped: {Skipped}, ValidationErrors: {ValidationErrors}", 
+                processedCount, errorCount, skippedCount, validationErrorCount);
                 
-            Console.WriteLine($"📊 Summary: {processedCount} processed, {errorCount} errors, {skippedCount} skipped");
+            Console.WriteLine($"📊 Summary: {processedCount} processed, {errorCount} errors, {skippedCount} skipped, {validationErrorCount} validation errors");
 
             if (errorCount > 0)
             {
