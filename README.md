@@ -290,25 +290,7 @@ Update `ErpConnector/appsettings.json`:
 - **SQL Server**: Database platform
 - **RESTful APIs**: External service integration
 
-## 🎯 Template Usage Examples
 
-### **Example 1: SAP to Shopify Integration**
-- Update `ApiSettings` for SAP API endpoints
-- Modify DTOs to match SAP data structure
-- Update database models for Shopify schema
-- Customize validation rules for SAP data
-
-### **Example 2: Oracle ERP to Magento Integration**
-- Configure Oracle database connection
-- Update repositories for Oracle-specific queries
-- Modify API service for Oracle REST APIs
-- Add Magento-specific business logic
-
-### **Example 3: Custom ERP to WooCommerce**
-- Create custom DTOs for your ERP format
-- Implement custom validators for business rules
-- Add WooCommerce-specific database operations
-- Extend services for custom business logic
 
 ## 📝 Contributing
 
@@ -319,28 +301,6 @@ Update `ErpConnector/appsettings.json`:
 5. Follow clean architecture principles
 6. Update documentation as needed
 7. Maintain consistent naming conventions
-
-## 🐛 Troubleshooting
-
-### Common Issues
-- **Connection Issues**: Check SQL Server connection string in appsettings.json
-- **Build Errors**: Ensure all NuGet packages are restored with `dotnet restore`
-- **Test Failures**: Verify test data and validation rules
-- **API Timeouts**: Check ApiSettings timeout configuration
-- **Validation Errors**: Review FluentValidation rules in validator classes
-
-### Performance Tips
-- **Database**: Use connection pooling and proper indexing
-- **API Calls**: Implement retry logic and timeout handling
-- **Logging**: Use appropriate log levels (Debug, Info, Warning, Error)
-- **Testing**: Run tests in parallel for faster execution
-
-### Support
-For issues or questions, check:
-1. Code comments in respective classes
-2. Validation rules in validator classes
-3. Interface definitions for expected behavior
-4. Test cases for usage examples
 
 ## 📄 License
 
