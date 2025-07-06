@@ -20,21 +20,66 @@ namespace ErpConnector.Repository
                 new { ApiId = apiId });
         }
 
+
         public async Task InsertCategory(Category category)
         {
             string sql = @"
-                INSERT INTO [nop].[dbo].[Category] 
-                (Name, MetaKeywords, MetaTitle, PageSizeOptions, Description, CategoryTemplateId, 
-                 MetaDescription, ParentCategoryId, PictureId, PageSize, AllowCustomersToSelectPageSize, 
-                 ShowOnHomepage, IncludeInTopMenu, SubjectToAcl, LimitedToStores, Published, Deleted, 
-                 DisplayOrder, CreatedOnUtc, UpdatedOnUtc, PriceRangeFiltering, PriceFrom, PriceTo, 
-                 ManuallyPriceRange, RestrictFromVendors, ApiId)
-                VALUES
-                (@Name, @MetaKeywords, @MetaTitle, @PageSizeOptions, @Description, @CategoryTemplateId, 
-                 @MetaDescription, @ParentCategoryId, @PictureId, @PageSize, @AllowCustomersToSelectPageSize, 
-                 @ShowOnHomepage, @IncludeInTopMenu, @SubjectToAcl, @LimitedToStores, @Published, @Deleted, 
-                 @DisplayOrder, @CreatedOnUtc, @UpdatedOnUtc, @PriceRangeFiltering, @PriceFrom, @PriceTo, 
-                 @ManuallyPriceRange, @RestrictFromVendors, @ApiId);";
+                INSERT INTO [nop].[dbo].[Category] (
+                    Name,
+                    MetaKeywords,
+                    MetaTitle,
+                    PageSizeOptions,
+                    Description,
+                    CategoryTemplateId,
+                    MetaDescription,
+                    ParentCategoryId,
+                    PictureId,
+                    PageSize,
+                    AllowCustomersToSelectPageSize,
+                    ShowOnHomepage,
+                    IncludeInTopMenu,
+                    SubjectToAcl,
+                    LimitedToStores,
+                    Published,
+                    Deleted,
+                    DisplayOrder,
+                    CreatedOnUtc,
+                    UpdatedOnUtc,
+                    PriceRangeFiltering,
+                    PriceFrom,
+                    PriceTo,
+                    ManuallyPriceRange,
+                    RestrictFromVendors,
+                    ApiId
+                )
+                VALUES (
+                    @Name,
+                    @MetaKeywords,
+                    @MetaTitle,
+                    @PageSizeOptions,
+                    @Description,
+                    @CategoryTemplateId,
+                    @MetaDescription,
+                    @ParentCategoryId,
+                    @PictureId,
+                    @PageSize,
+                    @AllowCustomersToSelectPageSize,
+                    @ShowOnHomepage,
+                    @IncludeInTopMenu,
+                    @SubjectToAcl,
+                    @LimitedToStores,
+                    @Published,
+                    @Deleted,
+                    @DisplayOrder,
+                    @CreatedOnUtc,
+                    @UpdatedOnUtc,
+                    @PriceRangeFiltering,
+                    @PriceFrom,
+                    @PriceTo,
+                    @ManuallyPriceRange,
+                    @RestrictFromVendors,
+                    @ApiId
+                );";
 
             await _dapper.ExecuteAsync(sql, category);
         }
