@@ -172,3 +172,5 @@ C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATI
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\ErpConnector.Tests\obj\Debug\net9.0\ErpConnector.Tests.pdb
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\ErpConnector.Tests\obj\Debug\net9.0\ErpConnector.Tests.genruntimeconfig.cache
 C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\ErpConnector.Tests\obj\Debug\net9.0\ref\ErpConnector.Tests.dll
+C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\ErpConnector.Tests\bin\Debug\net9.0\Castle.Core.dll
+C:\Users\Παράσχος Κουρπίδης\Desktop\.NET-CORE-API-NOP-INTEGRATION\ErpConnector.Tests\bin\Debug\net9.0\Moq.dll
