@@ -43,68 +43,68 @@ This project provides an integration between an ERP system and NOP Commerce plat
 
 ```
 ErpConnector/
-├── ErpConnector/                           # Main application
-│   ├── Controllers/                        # API controllers
-│   │   ├── CategoryController.cs           # Category sync operations
-│   │   ├── ProductController.cs            # Product sync operations
-│   │   ├── TestController.cs               # Test operations
-│   │   └── ValidationTestController.cs     # Validation testing
-│   ├── Services/                           # Business logic
-│   │   ├── IServices/                      # Service interfaces
-│   │   │   ├── IApiService.cs              # API service interface
-│   │   │   ├── INopCategoryService.cs      # Category service interface
-│   │   │   ├── INopProductService.cs       # Product service interface
-│   │   │   ├── INopLocalizedPropertyService.cs # Localization service interface
-│   │   │   └── IValidationService.cs       # Validation service interface
-│   │   ├── ApiService.cs                   # External API communication
-│   │   ├── NopCategoryService.cs           # Category business logic
-│   │   ├── NopProductService.cs            # Product business logic
-│   │   ├── NopLocalizedPropertyService.cs  # Localization business logic
-│   │   └── ValidationService.cs            # Validation business logic
-│   ├── Data/                               # Database context and repositories
-│   │   ├── Repository/                     # Data access layer
-│   │   │   ├── IRepository/                # Repository interfaces
-│   │   │   │   ├── IApiRepository.cs       # API repository interface
-│   │   │   │   ├── INopCategoryRepository.cs # Category repository interface
-│   │   │   │   ├── INopProductRepository.cs  # Product repository interface
-│   │   │   │   └── INopLocalizedPropertyRepository.cs # Localization repository interface
-│   │   │   ├── ApiRepository.cs            # API data access
-│   │   │   ├── NopCategoryRepository.cs    # Category data access
-│   │   │   ├── NopProductRepository.cs     # Product data access
-│   │   │   └── NopLocalizedPropertyRepository.cs # Localization data access
-│   │   ├── DbInitializer/                  # Database initialization
-│   │   │   ├── IDbInitializer.cs           # Database initializer interface
-│   │   │   └── DbInitializer.cs            # Database setup and table creation
-│   │   └── DataContextDapper.cs            # Dapper database context
-│   ├── DTOs/                               # Data transfer objects
-│   │   ├── CategoryFromApiDto.cs           # Category API response model
-│   │   ├── ProductFromApiDto.cs            # Product API response model
-│   │   └── ProductsResponseDto.cs          # Products collection response model
-│   ├── Models/                             # Domain models
-│   │   ├── Category.cs                     # Category domain model
-│   │   ├── Product.cs                      # Product domain model
-│   │   ├── LocalizedProperty.cs            # Localization domain model
-│   │   └── ApiSettings.cs                  # API configuration model
-│   ├── Validators/                         # FluentValidation validators
-│   │   ├── CategoryFromApiDtoValidator.cs  # Category validation rules
-│   │   └── ProductFromApiDtoValidator.cs   # Product validation rules
-│   ├── Mappers/                            # Object mapping
-│   │   ├── IMapper/                        # Mapper interfaces
-│   │   │   ├── ICategoryMapper.cs          # Category mapper interface
-│   │   │   └── IProductMapper.cs           # Product mapper interface
-│   │   ├── CategoryMapper.cs               # Category mapping logic
-│   │   └── ProductMapper.cs                # Product mapping logic
-│   ├── ErpConnector.csproj                 # Main project file
-│   ├── Program.cs                          # Application entry point
-│   └── appsettings.json                    # Configuration settings
-├── ErpConnector.Tests/                     # Unit tests
-│   ├── Validators/                         # Validator tests
-│   │   ├── CategoryFromApiDtoValidatorTests.cs  # Category validator tests (15 tests)
-│   │   └── ProductFromApiDtoValidatorTests.cs   # Product validator tests (21 tests)
-│   └── ErpConnector.Tests.csproj          # Test project file
-├── ErpConnector.sln                        # Solution file
-├── README.md                               # This file
-└── GIT-COMMANDS.md                         # Git update commands
+├── ErpConnector/                           
+│   ├── Controllers/                        
+│   │   ├── CategoryController.cs           
+│   │   ├── ProductController.cs            
+│   │   ├── TestController.cs               
+│   │   └── ValidationTestController.cs     
+│   ├── Services/                           
+│   │   ├── IServices/                      
+│   │   │   ├── IApiService.cs              
+│   │   │   ├── INopCategoryService.cs      
+│   │   │   ├── INopProductService.cs       
+│   │   │   ├── INopLocalizedPropertyService.cs
+│   │   │   └── IValidationService.cs       
+│   │   ├── ApiService.cs                   
+│   │   ├── NopCategoryService.cs           
+│   │   ├── NopProductService.cs            
+│   │   ├── NopLocalizedPropertyService.cs  
+│   │   └── ValidationService.cs            
+│   ├── Data/                               
+│   │   ├── Repository/                     
+│   │   │   ├── IRepository/                
+│   │   │   │   ├── IApiRepository.cs       
+│   │   │   │   ├── INopCategoryRepository.cs 
+│   │   │   │   ├── INopProductRepository.cs  
+│   │   │   │   └── INopLocalizedPropertyRepository.cs 
+│   │   │   ├── ApiRepository.cs            
+│   │   │   ├── NopCategoryRepository.cs    
+│   │   │   ├── NopProductRepository.cs     
+│   │   │   └── NopLocalizedPropertyRepository.cs
+│   │   ├── DbInitializer/                  
+│   │   │   ├── IDbInitializer.cs          
+│   │   │   └── DbInitializer.cs            
+│   │   └── DataContextDapper.cs            
+│   ├── DTOs/                               
+│   │   ├── CategoryFromApiDto.cs           
+│   │   ├── ProductFromApiDto.cs            
+│   │   └── ProductsResponseDto.cs          
+│   ├── Models/                             
+│   │   ├── Category.cs                     
+│   │   ├── Product.cs                      
+│   │   ├── LocalizedProperty.cs            
+│   │   └── ApiSettings.cs                  
+│   ├── Validators/                         
+│   │   ├── CategoryFromApiDtoValidator.cs 
+│   │   └── ProductFromApiDtoValidator.cs   
+│   ├── Mappers/                            
+│   │   ├── IMapper/                        
+│   │   │   ├── ICategoryMapper.cs         
+│   │   │   └── IProductMapper.cs          
+│   │   ├── CategoryMapper.cs             
+│   │   └── ProductMapper.cs                
+│   ├── ErpConnector.csproj              
+│   ├── Program.cs                         
+│   └── appsettings.json                    
+├── ErpConnector.Tests/                     
+│   ├── Validators/                         
+│   │   ├── CategoryFromApiDtoValidatorTests.cs  
+│   │   └── ProductFromApiDtoValidatorTests.cs   
+│   └── ErpConnector.Tests.csproj         
+├── ErpConnector.sln                        
+├── README.md                              
+└── GIT-COMMANDS.md                         
 ```
 
 ## 🚀 Getting Started
